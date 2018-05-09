@@ -7,4 +7,5 @@
 1. ~~Plan the required types for the game.~~
 2. Draw a world of isometric cubes.
 3. Make the world rotatable.
-4. TBC
+4. Replace css with scss.
+5. TBC
