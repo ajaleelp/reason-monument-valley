@@ -1,1 +1,1 @@
-ReactDOMRe.renderToElementWithId(<Cube />, "world");
+ReactDOMRe.renderToElementWithId(<World />, "world");
