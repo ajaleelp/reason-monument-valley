@@ -20,12 +20,20 @@ function make() {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
-              return $$Array.of_list(List.map((function () {
-                                return ReasonReact.element(/* None */0, /* None */0, Cube$ReactTemplate.make(/* array */[]));
+              return $$Array.of_list(List.map((function (c) {
+                                return ReasonReact.element(/* None */0, /* None */0, Cube$ReactTemplate.make(c, /* array */[]));
                               }), /* :: */[
-                              1,
+                              /* record */[
+                                /* x */0,
+                                /* y */0,
+                                /* z */0
+                              ],
                               /* :: */[
-                                2,
+                                /* record */[
+                                  /* x */1,
+                                  /* y */0,
+                                  /* z */0
+                                ],
                                 /* [] */0
                               ]
                             ]));

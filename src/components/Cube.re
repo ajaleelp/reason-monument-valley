@@ -1,6 +1,12 @@
 let component = ReasonReact.statelessComponent("Cube");
 
-let make = _children => {
+type _3dPosition = {
+  x: int,
+  y: int,
+  z: int,
+};
+
+let make = (~center: _3dPosition, _children) => {
   ...component,
   render: _self =>
     <div className="cube">
