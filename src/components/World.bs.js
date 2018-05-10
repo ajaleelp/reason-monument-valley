@@ -21,7 +21,7 @@ function make() {
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
               return $$Array.of_list(List.map((function (c) {
-                                return ReasonReact.element(/* None */0, /* None */0, Cube$ReactTemplate.make(c, /* array */[]));
+                                return ReasonReact.element(/* None */0, /* None */0, Cube$ReactTemplate.make(c, 40, /* array */[]));
                               }), /* :: */[
                               /* record */[
                                 /* x */0,

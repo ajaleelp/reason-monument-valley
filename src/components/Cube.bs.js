@@ -21,7 +21,7 @@ function _2dTranform(center, edge) {
         ];
 }
 
-function make(center, _) {
+function make(center, side, _) {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -33,22 +33,31 @@ function make(center, _) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
-              var leftPosition = Pervasives.string_of_float(_2dTranform(center, 40.0)[/* x */0] + 250.0) + "px";
-              var topPosition = Pervasives.string_of_float(350.0 - _2dTranform(center, 40.0)[/* y */1]) + "px";
+              var sideAsFloat = side;
+              var leftPosition = Pervasives.string_of_float(_2dTranform(center, sideAsFloat)[/* x */0] + 250.0) + "px";
+              var topPosition = Pervasives.string_of_float(350.0 - _2dTranform(center, sideAsFloat)[/* y */1]) + "px";
               var offsetSyle = {
                 left: leftPosition,
                 top: topPosition,
                 zIndex: "1"
               };
+              var sideAsString = String(side) + "px";
+              var faceStyle = {
+                height: sideAsString,
+                width: sideAsString
+              };
               return React.createElement("div", {
                           className: "cube",
                           style: offsetSyle
                         }, React.createElement("div", {
-                              className: "face front"
+                              className: "face front",
+                              style: faceStyle
                             }), React.createElement("div", {
-                              className: "face side"
+                              className: "face side",
+                              style: faceStyle
                             }), React.createElement("div", {
-                              className: "face top"
+                              className: "face top",
+                              style: faceStyle
                             }));
             }),
           /* initialState */component[/* initialState */10],
@@ -59,10 +68,7 @@ function make(center, _) {
         ];
 }
 
-var edge = 40.0;
-
 exports.component = component;
-exports.edge = edge;
 exports._2dTranform = _2dTranform;
 exports.make = make;
 /* component Not a pure module */

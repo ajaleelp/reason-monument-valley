@@ -6,9 +6,6 @@
 .face {
   transform-origin: 0 0;
   position: absolute;
-    width: 40px;
-    height: 40px;
-
   }
   .front {
     background: blue;

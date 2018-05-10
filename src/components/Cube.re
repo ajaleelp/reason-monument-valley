@@ -1,7 +1,5 @@
 let component = ReasonReact.statelessComponent("Cube");
 
-let edge = 40.0;
-
 type _3dPosition = {
   x: int,
   y: int,
@@ -24,13 +22,14 @@ let _2dTranform = (center: _3dPosition, edge) => {
   {x: x_index, y: y_index};
 };
 
-let make = (~center: _3dPosition, _children) => {
+let make = (~center: _3dPosition, ~side: int, _children) => {
   ...component,
   render: _self => {
+    let sideAsFloat = float_of_int(side);
     let leftPosition =
-      string_of_float(_2dTranform(center, 40.0).x +. 250.0) ++ "px";
+      string_of_float(_2dTranform(center, sideAsFloat).x +. 250.0) ++ "px";
     let topPosition =
-      string_of_float(350.0 -. _2dTranform(center, 40.0).y) ++ "px";
+      string_of_float(350.0 -. _2dTranform(center, sideAsFloat).y) ++ "px";
     let zIndex = "1";
     let offsetSyle =
       ReactDOMRe.Style.make(
@@ -39,10 +38,13 @@ let make = (~center: _3dPosition, _children) => {
         ~zIndex,
         (),
       );
+    let sideAsString = string_of_int(side) ++ "px";
+    let faceStyle =
+      ReactDOMRe.Style.make(~width=sideAsString, ~height=sideAsString, ());
     <div className="cube" style=offsetSyle>
-      <div className="face front" />
-      <div className="face side" />
-      <div className="face top" />
+      <div className="face front" style=faceStyle />
+      <div className="face side" style=faceStyle />
+      <div className="face top" style=faceStyle />
     </div>;
   },
 };

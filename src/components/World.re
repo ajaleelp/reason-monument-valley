@@ -7,7 +7,7 @@ let make = _children => {
   render: _self => {
     let myLayout: layout = [{x: 0, y: 0, z: 0}, {x: 1, y: 0, z: 0}];
     myLayout
-    |> List.map(c => <Cube center=c />)
+    |> List.map(c => <Cube center=c side=40 />)
     |> Array.of_list
     |> ReasonReact.arrayToElement;
   },
