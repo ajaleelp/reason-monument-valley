@@ -5,7 +5,9 @@
 ### TO-DOs
 
 1. ~~Plan the required types for the game.~~
-2. Draw a world of isometric cubes.
+2. ~~Draw a world of isometric cubes.~~
 3. Make the world rotatable.
 4. Replace css with scss.
-5. TBC
+5. Make the cube side variable for a world.
+6. Account for overlapping cube faces.
+6. TBC

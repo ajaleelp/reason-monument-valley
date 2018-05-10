@@ -2,11 +2,26 @@
 'use strict';
 
 var React = require("react");
+var Pervasives = require("bs-platform/lib/js/pervasives.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 
 var component = ReasonReact.statelessComponent("Cube");
 
-function make(_, _$1) {
+function _2dTranform(center, edge) {
+  var x = center[/* x */0];
+  var y = center[/* y */1];
+  var z = center[/* z */2];
+  var edgeH = edge * Math.sqrt(3.0) / 2.0;
+  var edgeV = edge / 2.0;
+  var x_index = x * edgeH - y * edgeH;
+  var y_index = x * edgeV + y * edgeV + z * edge;
+  return /* record */[
+          /* x */x_index,
+          /* y */y_index
+        ];
+}
+
+function make(center, _) {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -18,8 +33,16 @@ function make(_, _$1) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
+              var leftPosition = Pervasives.string_of_float(_2dTranform(center, 40.0)[/* x */0] + 250.0) + "px";
+              var topPosition = Pervasives.string_of_float(350.0 - _2dTranform(center, 40.0)[/* y */1]) + "px";
+              var offsetSyle = {
+                left: leftPosition,
+                top: topPosition,
+                zIndex: "1"
+              };
               return React.createElement("div", {
-                          className: "cube"
+                          className: "cube",
+                          style: offsetSyle
                         }, React.createElement("div", {
                               className: "face front"
                             }), React.createElement("div", {
@@ -36,6 +59,10 @@ function make(_, _$1) {
         ];
 }
 
+var edge = 40.0;
+
 exports.component = component;
+exports.edge = edge;
+exports._2dTranform = _2dTranform;
 exports.make = make;
 /* component Not a pure module */

@@ -1,1 +1,9 @@
 @import "components/Cube.css";
+
+.world {
+  background-color: grey;
+  height: 500px;
+  width: 500px;
+  margin: 100px auto 0 auto;
+  z-index: -50;
+}
