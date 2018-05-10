@@ -34,12 +34,13 @@ function make(center, side, _) {
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
               var sideAsFloat = side;
-              var leftPosition = Pervasives.string_of_float(_2dTranform(center, sideAsFloat)[/* x */0] + 250.0) + "px";
-              var topPosition = Pervasives.string_of_float(350.0 - _2dTranform(center, sideAsFloat)[/* y */1]) + "px";
+              var left = Pervasives.string_of_float(_2dTranform(center, sideAsFloat)[/* x */0] + 350.0) + "px";
+              var top = Pervasives.string_of_float(350.0 - _2dTranform(center, sideAsFloat)[/* y */1]) + "px";
+              var zIndex = String(100 - ((center[/* x */0] + center[/* y */1] | 0) - center[/* z */2] | 0) | 0);
               var offsetSyle = {
-                left: leftPosition,
-                top: topPosition,
-                zIndex: "1"
+                left: left,
+                top: top,
+                zIndex: zIndex
               };
               var sideAsString = String(side) + "px";
               var faceStyle = {

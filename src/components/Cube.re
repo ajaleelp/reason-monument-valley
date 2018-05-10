@@ -26,18 +26,12 @@ let make = (~center: _3dPosition, ~side: int, _children) => {
   ...component,
   render: _self => {
     let sideAsFloat = float_of_int(side);
-    let leftPosition =
-      string_of_float(_2dTranform(center, sideAsFloat).x +. 250.0) ++ "px";
-    let topPosition =
+    let left =
+      string_of_float(_2dTranform(center, sideAsFloat).x +. 350.0) ++ "px";
+    let top =
       string_of_float(350.0 -. _2dTranform(center, sideAsFloat).y) ++ "px";
-    let zIndex = "1";
-    let offsetSyle =
-      ReactDOMRe.Style.make(
-        ~left=leftPosition,
-        ~top=topPosition,
-        ~zIndex,
-        (),
-      );
+    let zIndex = string_of_int(100 - (center.x + center.y - center.z));
+    let offsetSyle = ReactDOMRe.Style.make(~left, ~top, ~zIndex, ());
     let sideAsString = string_of_int(side) ++ "px";
     let faceStyle =
       ReactDOMRe.Style.make(~width=sideAsString, ~height=sideAsString, ());

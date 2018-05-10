@@ -2,8 +2,8 @@
 
 .world {
   background-color: grey;
-  height: 500px;
-  width: 500px;
+  height: 700px;
+  width: 700px;
   margin: 100px auto 0 auto;
   z-index: -50;
 }
