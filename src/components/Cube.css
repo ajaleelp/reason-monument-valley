@@ -3,7 +3,7 @@
   position: relative;
 }
 
-.face {
+/* .face {
   transform-origin: 0 0;
   position: absolute;
   }
@@ -24,4 +24,42 @@
     -ms-transform: rotate(90deg) skewX(-30deg) scaleY(0.864) translate(68px, -131px);
     -webkit-transform: rotate(90deg) skewX(-30deg) scaleY(0.864) translate(68px, -131px);
     transform: rotate(90deg) skewX(-30deg)  scaleY(0.864);
+  } */
+  .triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-bottom: 50px solid transparent;
+  }
+
+  .left-top {
+    border-right:86.6px solid red;
+  }
+
+  .left-side {
+    border-right:86.6px solid green;
+    top: 100px;
+  }
+
+  .left-front {
+    border-right:86.6px solid blue;
+    top: 50px;
+    left: 86.6px;
+  }
+
+  .right-top {
+    border-left:86.6px solid red;
+    left: 86.6px;
+  }
+
+  .right-side {
+    border-left: 86.6px solid green;
+    top: 50px;
+  }
+
+  .right-front {
+    border-left:86.6px solid blue;
+    top: 100px;
+    left: 86.6px;
   }

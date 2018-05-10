@@ -2,26 +2,60 @@
 'use strict';
 
 var React = require("react");
-var Pervasives = require("bs-platform/lib/js/pervasives.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 
 var component = ReasonReact.statelessComponent("Cube");
 
-function _2dTranform(center, edge) {
+function _2dTransform(center) {
   var x = center[/* x */0];
   var y = center[/* y */1];
   var z = center[/* z */2];
-  var edgeH = edge * Math.sqrt(3.0) / 2.0;
-  var edgeV = edge / 2.0;
-  var x_index = x * edgeH - y * edgeH;
-  var y_index = x * edgeV + y * edgeV + z * edge;
-  return /* record */[
-          /* x */x_index,
-          /* y */y_index
+  return /* :: */[
+          /* tuple */[
+            x - y | 0,
+            (x + y | 0) + (z << 1) | 0
+          ],
+          /* :: */[
+            /* tuple */[
+              x - y | 0,
+              ((x + y | 0) + (z << 1) | 0) + 1 | 0
+            ],
+            /* :: */[
+              /* tuple */[
+                x - y | 0,
+                ((x + y | 0) + (z << 1) | 0) + 2 | 0
+              ],
+              /* :: */[
+                /* tuple */[
+                  (x - y | 0) + 1 | 0,
+                  (x + y | 0) + (z << 1) | 0
+                ],
+                /* :: */[
+                  /* tuple */[
+                    (x - y | 0) + 1 | 0,
+                    ((x + y | 0) + (z << 1) | 0) + 1 | 0
+                  ],
+                  /* :: */[
+                    /* tuple */[
+                      (x - y | 0) + 1 | 0,
+                      ((x + y | 0) + (z << 1) | 0) + 2 | 0
+                    ],
+                    /* [] */0
+                  ]
+                ]
+              ]
+            ]
+          ]
         ];
 }
 
-function make(center, side, _) {
+function xOrigin(side, triangle) {
+  var edgeH = side * Math.sqrt(3.0) / 2.0;
+  var x = triangle >= 3 ? edgeH : 0.0;
+  return 350.0 - edgeH + x;
+}
+
+function make(_, _$1, _$2) {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -33,32 +67,20 @@ function make(center, side, _) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
-              var sideAsFloat = side;
-              var left = Pervasives.string_of_float(_2dTranform(center, sideAsFloat)[/* x */0] + 350.0) + "px";
-              var top = Pervasives.string_of_float(350.0 - _2dTranform(center, sideAsFloat)[/* y */1]) + "px";
-              var zIndex = String(100 - ((center[/* x */0] + center[/* y */1] | 0) - center[/* z */2] | 0) | 0);
-              var offsetSyle = {
-                left: left,
-                top: top,
-                zIndex: zIndex
-              };
-              var sideAsString = String(side) + "px";
-              var faceStyle = {
-                height: sideAsString,
-                width: sideAsString
-              };
               return React.createElement("div", {
-                          className: "cube",
-                          style: offsetSyle
+                          className: "cube"
                         }, React.createElement("div", {
-                              className: "face front",
-                              style: faceStyle
+                              className: "triangle left-side"
                             }), React.createElement("div", {
-                              className: "face side",
-                              style: faceStyle
+                              className: "triangle right-side"
                             }), React.createElement("div", {
-                              className: "face top",
-                              style: faceStyle
+                              className: "triangle left-top"
+                            }), React.createElement("div", {
+                              className: "triangle right-front"
+                            }), React.createElement("div", {
+                              className: "triangle left-front"
+                            }), React.createElement("div", {
+                              className: "triangle right-top"
                             }));
             }),
           /* initialState */component[/* initialState */10],
@@ -70,6 +92,7 @@ function make(center, side, _) {
 }
 
 exports.component = component;
-exports._2dTranform = _2dTranform;
+exports._2dTransform = _2dTransform;
+exports.xOrigin = xOrigin;
 exports.make = make;
 /* component Not a pure module */
