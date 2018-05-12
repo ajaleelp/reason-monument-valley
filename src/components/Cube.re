@@ -6,10 +6,6 @@ type _3dCoOd = {
   z: int,
 };
 
-type _2dCoOd = (int, int);
-
-type cubeIn2d = list(_2dCoOd);
-
 type triangle =
   | LeftSide
   | RightSide
@@ -18,59 +14,96 @@ type triangle =
   | LeftFront
   | RightFront;
 
-let _2dTransform = (center: _3dCoOd) => {
-  let x = center.x;
-  let y = center.y;
-  let z = center.z;
-  [
-    (x - y, x + y + 2 * z),
-    (x - y, x + y + 2 * z + 1),
-    (x - y, x + y + 2 * z + 2),
-    (x - y + 1, x + y + 2 * z),
-    (x - y + 1, x + y + 2 * z + 1),
-    (x - y + 1, x + y + 2 * z + 2),
-  ];
-};
-
-let xOrigin = (side: int, triangle: triangle) => {
+let leftPosition = (side: int, triangle: triangle, center: _3dCoOd) => {
   let edgeH = float_of_int(side) *. sqrt(3.0) /. 2.0;
-  let x =
-    switch (triangle, edgeH) {
-    | (LeftSide | RightSide | LeftTop, _edgeH) => 0.0
-    | (RightFront | LeftFront | RightTop, edgeH) => edgeH
+  let x3d = float_of_int(center.x);
+  let y3d = float_of_int(center.y);
+  let x2d =
+    switch (triangle, x3d, y3d) {
+    | (LeftSide | RightSide | LeftTop, x3d, y3d) => x3d -. y3d
+    | (RightFront | LeftFront | RightTop, x3d, y3d) => x3d -. y3d +. 1.0
     };
-  350.0 -. edgeH +. x;
+  350.0 +. x2d *. edgeH;
 };
 
-/* let _2dTranform = (center: _3dPosition, edge) => {
-     let x = float_of_int(center.x);
-     let y = float_of_int(center.y);
-     let z = float_of_int(center.z);
-     let edgeH = edge *. sqrt(3.0) /. 2.0;
-     let edgeV = edge /. 2.0;
-     let x_index = x *. edgeH -. y *. edgeH;
-     let y_index = x *. edgeV +. y *. edgeV +. z *. edge;
-     {x: x_index, y: y_index};
-   }; */
+let topPosition = (side: int, triangle: triangle, center: _3dCoOd) => {
+  let edgeV = float_of_int(side);
+  let x3d = float_of_int(center.x);
+  let y3d = float_of_int(center.y);
+  let z3d = float_of_int(center.z);
+  let y2d =
+    switch (triangle, x3d, y3d, z3d) {
+    | (LeftSide | RightFront, x3d, y3d, z3d) =>
+      (x3d +. y3d +. 2.0 *. z3d) *. 0.5
+    | (RightSide | LeftFront, x3d, y3d, z3d) =>
+      (x3d +. y3d +. 2.0 *. z3d +. 1.0) *. 0.5
+    | (LeftTop | RightTop, x3d, y3d, z3d) =>
+      (x3d +. y3d +. 2.0 *. z3d +. 2.0) *. 0.5
+    };
+  350.0 -. y2d *. edgeV;
+};
+
+let triangleStyle = (side: int, triangle: triangle, center: _3dCoOd) => {
+  let left = string_of_float(leftPosition(side, triangle, center)) ++ "px";
+  let top = string_of_float(topPosition(side, triangle, center)) ++ "px";
+  let borderTop = string_of_int(side / 2) ++ "px solid transparent";
+  let borderBottom = string_of_int(side / 2) ++ "px solid transparent";
+  let borderSize =
+    string_of_float(float_of_int(side) *. 0.866) ++ "px solid";
+  let borderRight =
+    switch (triangle, borderSize) {
+    | (LeftSide, borderSize) => borderSize ++ " green"
+    | (LeftFront, borderSize) => borderSize ++ " blue"
+    | (LeftTop, borderSize) => borderSize ++ " red"
+    | (RightSide | RightFront | RightTop, _borderSize) => "none"
+    };
+  let borderLeft =
+    switch (triangle, borderSize) {
+    | (RightSide, borderSize) => borderSize ++ " green"
+    | (RightFront, borderSize) => borderSize ++ " blue"
+    | (RightTop, borderSize) => borderSize ++ " red"
+    | (LeftSide | LeftFront | LeftTop, _borderSize) => "none"
+    };
+  let zIndexDefault = string_of_int(100 - (center.x + center.y - center.z));
+  ReactDOMRe.Style.make(
+    ~left,
+    ~top,
+    ~borderTop,
+    ~borderBottom,
+    ~borderRight,
+    ~borderLeft,
+    ~zIndex=zIndexDefault,
+    (),
+  );
+};
+
 let make = (~center: _3dCoOd, ~side: int, _children) => {
   ...component,
   render: _self =>
-    /* let sideAsFloat = float_of_int(side);
-       let left =
-         string_of_float(_2dTranform(center, sideAsFloat).x +. 350.0) ++ "px";
-       let top =
-         string_of_float(350.0 -. _2dTranform(center, sideAsFloat).y) ++ "px";
-       let zIndex = string_of_int(100 - (center.x + center.y - center.z));
-       let offsetSyle = ReactDOMRe.Style.make(~left, ~top, ~zIndex, ());
-       let sideAsString = string_of_int(side) ++ "px";
-       let faceStyle =
-         ReactDOMRe.Style.make(~width=sideAsString, ~height=sideAsString, ()); */
     <div className="cube">
-      <div className="triangle left-side" />
-      <div className="triangle right-side" />
-      <div className="triangle left-top" />
-      <div className="triangle right-front" />
-      <div className="triangle left-front" />
-      <div className="triangle right-top" />
+      <div
+        className="triangle"
+        style=(triangleStyle(side, LeftSide, center))
+      />
+      <div
+        className="triangle"
+        style=(triangleStyle(side, RightSide, center))
+      />
+      <div
+        className="triangle"
+        style=(triangleStyle(side, LeftTop, center))
+      />
+      <div
+        className="triangle"
+        style=(triangleStyle(side, RightFront, center))
+      />
+      <div
+        className="triangle"
+        style=(triangleStyle(side, LeftFront, center))
+      />
+      <div
+        className="triangle"
+        style=(triangleStyle(side, RightTop, center))
+      />
     </div>,
 };
